@@ -29,6 +29,13 @@ typedef struct MonoType {
 typedef struct MonoString {
 
 }MonoString;
+typedef unsigned __int64 mono_array_size_t;
+typedef struct MonoArray
+{
+	MonoObject* array_object;
+	char pad_0x20[0x20];
+	MonoObject* array_items[255];
+} MonoArray;
 
 typedef MonoThread* (*t_mono_thread_attach)(MonoDomain* domain);
 inline t_mono_thread_attach mono_thread_attach;
@@ -84,10 +91,13 @@ inline t_mono_field_get_name mono_field_get_name;
 typedef void* (*t_mono_field_get_value)(MonoObject* obj, MonoField* field, void* value);
 inline t_mono_field_get_value mono_field_get_value;
 
+typedef size_t (*t_mono_array_length)(MonoArray* arr);
+inline t_mono_array_length mono_array_length;
+
 typedef void (*t_mono_field_set_value)(MonoObject* obj, MonoField* field, void* value);
 inline t_mono_field_set_value mono_field_set_value;
 
-typedef void(*t_mono_field_static_get_value)(void* obj, MonoField* field, void* value);
+typedef void(*t_mono_field_static_get_value)(MonoVTable* vtable, MonoField* field, void* value);
 inline t_mono_field_static_get_value mono_field_static_get_value;
 
 typedef void(*t_mono_field_static_set_value)(void* obj, MonoField* field, void* value);

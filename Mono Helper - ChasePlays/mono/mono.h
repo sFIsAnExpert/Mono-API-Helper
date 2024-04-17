@@ -60,9 +60,12 @@ struct Field : public MonoField {
 	static Field* Resolve(const char* Asm, const char* Namespace, const char* Klass, const char* Name);
 
 	template <class T>
-	T GetStaticValue() {
+	T GetStaticValue() 
+	{
 		T val;
-		mono_field_static_get_value(mono_class_vtable(Mono::domain, mono_field_get_parent(this)), this, &val);
+		MonoVTable* vTable = mono_class_vtable(Mono::domain, mono_field_get_parent(this));
+		mono_runtime_class_init(vTable);
+		mono_field_static_get_value(vTable, this, &val);
 		return val;
 	}
 
@@ -75,11 +78,13 @@ struct Field : public MonoField {
 
 	template <class T>
 	void SetStaticValue(void* value) {
-		mono_field_static_set_value(mono_class_vtable(Mono::domain, mono_field_get_parent(this)), this, value);
+		MonoVTable* vTable = mono_class_vtable(Mono::domain, mono_field_get_parent(this));
+		mono_runtime_class_init(vTable);
+		mono_field_static_set_value(vTable, this, value);
 	}
 
 	template <class T>
-	void SetValue(MonoObject* obj, void* value) {
+	void SetValue(MonoObject* obj, T* value) {
 		mono_field_set_value(obj, this, value);
 	}
 };
@@ -95,6 +100,13 @@ struct Object : public MonoObject {
 		Object* obj = mono_object_new(Mono::domain, klass);
 		mono_runtime_object_init(obj);
 		return (T)obj;
+	}
+};
+
+template <class T>
+struct Array : public MonoArray {
+	T GetValue(size_t id) {
+		return reinterpret_cast<T>(this->array_items[id]);
 	}
 };
 

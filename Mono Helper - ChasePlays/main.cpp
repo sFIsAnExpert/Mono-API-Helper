@@ -1,13 +1,23 @@
 #include "sdk/sdk.hpp"
 
-void(*PlayerUpdate_o)(Component*);
-void PlayerUpdateHk(Component* obj) {
-    PlayerUpdate_o(obj);
+float nVal = 99999999.f;
 
-    Transform* trans = obj->GetTransform();
-    Vector3 pos = trans->GetPosition();
-
-    std::cout << "X: " << pos.x << " Y: " << pos.y << " Z: " << pos.z << "\n";
+void(*Update_o)(CharacterBody*); //STORES ALL PLAYERS
+void UpdateHk(CharacterBody* master) {
+    Update_o(master);
+    auto list = CharacterBody::GetInstances();
+    if (!list) return;
+    auto arr = list->GetValues();
+    if (!arr) return;
+    for (size_t i = 0; i < list->Count(); i++) {
+        CharacterBody* body = arr->GetValue(i);
+        if (!body) continue;
+        if (!body->isPlayer()) continue;
+        Vector3 pos = body->GetPosition();
+        std::cout << "X: " << pos.x << " Y: " << pos.y << " Z: " << pos.z << "\n";
+        body->GetField("levelMaxHealth")->SetValue<float>(body, &nVal);
+        body->GetField("levelDamage")->SetValue<float>(body, &nVal);
+    }
 }
 
 DWORD MainThread(LPVOID lpReserved) {
@@ -17,7 +27,7 @@ DWORD MainThread(LPVOID lpReserved) {
 
     Mono::Initialize();
 
-    Method::Resolve("Assembly-CSharp", "", "Player", "Update", 0)->Hook(PlayerUpdateHk, &PlayerUpdate_o);
+    Method::Resolve("RoR2", "RoR2", "CharacterBody", "Update", 0)->Hook(UpdateHk, &Update_o);
 
     return TRUE;
 }

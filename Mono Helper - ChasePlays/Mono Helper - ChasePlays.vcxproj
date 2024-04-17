@@ -163,7 +163,9 @@
     <ClInclude Include="mono\mono_types.h" />
     <ClInclude Include="mono\mono_api.h" />
     <ClInclude Include="mono\mono_memory.h" />
+    <ClInclude Include="sdk\class\charactermaster.hpp" />
     <ClInclude Include="sdk\class\component.hpp" />
+    <ClInclude Include="sdk\class\list.hpp" />
     <ClInclude Include="sdk\class\transform.hpp" />
     <ClInclude Include="sdk\class\vector.hpp" />
     <ClInclude Include="sdk\sdk.hpp" />
