@@ -107,13 +107,13 @@ template <class T>
 struct Array : public Object {
 public:
 	T GetValue(int index) {
-		return Method::Call<T(*)(Array<T>*, int)>(Module::mscorlib, "System", "Array", "GetValueImpl", 1)(this, index - this->GetLowerBound(0));
+		return Method::Call<T(*)(Array<T>*, int)>("mscorlib", "System", "Array", "GetValueImpl", 1)(this, index - this->GetLowerBound(0));
 	}
 	int GetLength() {
-		return Method::Call<int(*)(Array<T>*)>(Module::mscorlib, "System", "Array", "get_Length", 0)(this);
+		return Method::Call<int(*)(Array<T>*)>("mscorlib", "System", "Array", "get_Length", 0)(this);
 	}
 	int GetLowerBound(int bound) {
-		return Method::Call<int(*)(Array<T>*, int)>(Module::mscorlib, "System", "Array", "GetLowerBound", 1)(this, bound);
+		return Method::Call<int(*)(Array<T>*, int)>("mscorlib", "System", "Array", "GetLowerBound", 1)(this, bound);
 	}
 	bool isEmpty() {
 		return this->GetLength() == 0;
