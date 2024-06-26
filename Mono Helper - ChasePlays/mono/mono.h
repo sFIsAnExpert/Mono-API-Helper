@@ -119,4 +119,9 @@ public:
 		return this->GetLength() == 0;
 	}
 };
-
+struct Type : public MonoType {
+	static Type* Resolve(Class* klass);
+	static Type* Resolve(const char* Asm, const char* Namespace, const char* Klass);
+	Class* GetClass();
+	Object* GetObjectType();
+};
