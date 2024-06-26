@@ -102,3 +102,23 @@ wchar_t* String::c_str()
 {
 	return (wchar_t*)mono_string_chars(this);
 }
+
+Type* Type::Resolve(Class* klass)
+{
+	return (Type*)mono_class_get_type(klass);
+}
+
+Type* Type::Resolve(const char* Asm, const char* Namespace, const char* Klass)
+{
+	return Type::Resolve(Class::Resolve(Asm, Namespace, Klass));
+}
+
+Class* Type::GetClass()
+{
+	return (Class*)mono_type_get_class(this);
+}
+
+Object* Type::GetObjectType()
+{
+	return (Object*)mono_type_get_object(Mono::domain, this);
+}
