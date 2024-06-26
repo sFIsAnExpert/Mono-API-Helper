@@ -38,6 +38,9 @@ namespace API {
 		mono_object_new = reinterpret_cast<t_mono_object_new>(_MonoMemory.GetExport(L"mono_object_new"));
 		mono_runtime_object_init = reinterpret_cast<t_mono_runtime_object_init>(_MonoMemory.GetExport(L"mono_runtime_object_init"));
 		mono_array_length = reinterpret_cast<t_mono_array_length>(_MonoMemory.GetExport(L"mono_array_length"));
+		mono_class_get_type = reinterpret_cast<t_mono_class_get_type>(_MonoMemory.GetExport(L"mono_class_get_type"));
+		mono_type_get_class = reinterpret_cast<t_mono_type_get_class>(_MonoMemory.GetExport(L"mono_type_get_class"));
+		mono_type_get_object = reinterpret_cast<t_mono_type_get_object>(_MonoMemory.GetExport(L"mono_type_get_object"));
 
 		mono_thread_attach = reinterpret_cast<t_mono_thread_attach>(_MonoMemory.GetExport(L"mono_thread_attach"));
 		mono_get_root_domain = reinterpret_cast<t_mono_get_root_domain>(_MonoMemory.GetExport(L"mono_get_root_domain"));
