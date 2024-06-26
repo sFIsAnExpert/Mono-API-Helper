@@ -49,6 +49,15 @@ inline t_mono_get_root_domain mono_get_root_domain;
 typedef MonoAssembly* (*t_mono_domain_assembly_open)(MonoDomain* doamin, const char* name);
 inline t_mono_domain_assembly_open mono_domain_assembly_open;
 
+typedef MonoObject* (*t_mono_type_get_object)(MonoDomain* dom, MonoType* type);
+inline t_mono_type_get_object mono_type_get_object;
+
+typedef MonoType* (*t_mono_class_get_type)(MonoClass* klass);
+inline t_mono_class_get_type mono_class_get_type;
+
+typedef MonoClass* (*t_mono_type_get_class)(MonoType* type);
+inline t_mono_type_get_class mono_type_get_class;
+
 typedef MonoImage* (*t_mono_assembly_get_image)(MonoAssembly* assembly);
 inline t_mono_assembly_get_image mono_assembly_get_image;
 
