@@ -7,6 +7,6 @@ public:
 	}
 
 	Vector3 GetPosition() {
-		*return Method::CallVT<Vector3*>("UnityEngine.CoreModule", "UnityEngine", "Transform", "get_position", 0, this);
+		return Method::CallVT<Vector3>("UnityEngine.CoreModule", "UnityEngine", "Transform", "get_position", 0, this);
 	}
 };
